@@ -70,10 +70,10 @@ def main():
     
     for url in all_urls:
         # sleep for 10 seconds before making API call as we have limit of 12 pages/minute
-        time.sleep(10)
+        time.sleep(20)
         archive_page(url)
 
 if __name__ == '__main__':
-    logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+    logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
     main()
     
