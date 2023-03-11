@@ -70,7 +70,7 @@ def main():
     
     for url in all_urls:
         # sleep for 10 seconds before making API call as we have limit of 12 pages/minute
-        time.sleep(20)
+        time.sleep(15)
         archive_page(url)
 
 if __name__ == '__main__':
