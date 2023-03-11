@@ -2,17 +2,25 @@ name: amara-backup
 
 on:
     schedule:
-      - cron: '0 0 * * *'
+      - cron: '30 18 * * *'
     workflow_dispatch:
 
 jobs:
   amarabackup:
     runs-on: ubuntu-latest
     steps:
-      - name: Save website
-        uses: JamieMagee/wayback@v1.3.28
-        with:
-          url: https://amarahospital.com/
-          saveErrors: false
-          saveOutlinks: true
-          saveScreenshot: true
+        - uses: actions/checkout@v3
+
+        - uses: actions/setup-python@v4
+          with:
+            python-version: '3.10'
+            cache: 'pip'
+    
+        - name: Install dependencies
+          run: pip install -r requirements.txt
+
+        - name: Archive pages
+          run: python archive_pages.py
+          env:
+            s3_access_key: ${{ secrets.s3_access_key }}
+            s3_secret_key: ${{ secrets.s3_secret_key }}
