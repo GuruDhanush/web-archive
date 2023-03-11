@@ -48,7 +48,7 @@ def archive_page(url: str):
         'url': url,
         'delay_wb_availability': 1,
         'skip_first_archive': 1,
-        'if_not_archived_within': '16h'
+        'if_not_archived_within': '24h'
     }
     resp = requests.post(ARCHIVE_SAVE_URL, headers=headers, data=body)
 
