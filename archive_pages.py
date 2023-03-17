@@ -48,18 +48,21 @@ def archive_page(url: str):
         'url': url,
         'delay_wb_availability': 1,
         'skip_first_archive': 1,
-        'if_not_archived_within': '24h'
+        'if_not_archived_within': '15h'
     }
-    resp = requests.post(ARCHIVE_SAVE_URL, headers=headers, data=body)
+    try:
+        resp = requests.post(ARCHIVE_SAVE_URL, headers=headers, data=body)
 
-    if resp.status_code != 200:
-        data = resp.text
-        logging.warning(f'Unable to archive page {url} due to {data}')
-    else:
-        data = resp.json()
-        logging.info(f'Archived page under {data.get("url")} via {data.get("job_id")}')
-        if data.get('message'):
-            logging.warning(f'Message: {data.get("message")}')
+        if resp.status_code != 200:
+            data = resp.text
+            logging.warning(f'Unable to archive page {url} due to {data}')
+        else:
+            data = resp.json()
+            logging.info(f'Archived page under {data.get("url")} via {data.get("job_id")}')
+            if data.get('message'):
+                logging.warning(f'Message: {data.get("message")}')
+    except Exception as ex:
+        logging.warning(str(ex))
 
 def main():
     # Get all site URLS from sitemap
@@ -70,7 +73,7 @@ def main():
     
     for url in all_urls:
         # sleep for 10 seconds before making API call as we have limit of 12 pages/minute
-        time.sleep(15)
+        time.sleep(10)
         archive_page(url)
 
 if __name__ == '__main__':
