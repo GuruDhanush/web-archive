@@ -2,7 +2,7 @@ name: amara-backup
 
 on:
     schedule:
-      - cron: '30 12 */3 * *'
+      - cron: '28 12 * * 3'
     workflow_dispatch:
 
 jobs:
